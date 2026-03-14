@@ -7,71 +7,108 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@nestjs/core" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-  <a href="https://www.npmjs.com/package/@nestjs/core" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-  <a href="https://www.npmjs.com/package/@nestjs/common" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-  <a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-  <a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-  <a href="https://opencollective.com/nest/backers" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers"/></a>
-  <a href="https://opencollective.com/nest/sponsors" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors"/></a>
+  <img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" alt="Maintained" />
+  <img src="https://img.shields.io/badge/Main%20Language-TypeScript-blue.svg" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Framework-NestJS-red.svg" alt="NestJS" />
+  <img src="https://img.shields.io/badge/Database-MongoDB-brightgreen.svg" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/Payment-Stripe-purple.svg" alt="Stripe" />
 </p>
+
+---
+
+## 📝 Description
+A high-performance, modular E-commerce backend built with **NestJS**. This project demonstrates a deep understanding of software architecture, implementing real-world features like multi-level category management, secure payments with **Stripe**, real-time communication via **WebSockets**, and advanced caching using **Redis Cloud**.
 
 ---
 
 ## ⚡ Features
 
-- 👤 **User Authentication**
-  - Sign up / Sign in with **JWT**  
-  - OAuth login (Google, Facebook) 🌐  
-  - Role-based access control (Admin, User, Service Provider) 🔑
+### 👤 User Authentication
+* **JWT Auth:** Secure Sign up / Sign in with **JWT** 🔐.
+* **OAuth Login:** OAuth login (Google, Facebook) 🌐.
+* **RBAC:** Role-based access control (Admin, User, Service Provider) 🔑.
 
-- 🛍️ **E-commerce Core**
-  - Products management (CRUD) 📦  
-  - Categories & subcategories 🏷️  
-  - Shopping cart & checkout 🛒  
-  - Coupons & discounts 💸  
-  - Order tracking & status updates 📝
+### 🛍️ E-commerce Core
+* **Products Management:** Full CRUD operations for products 📦.
+* **Categories:** Categories & subcategories management 🏷️.
+* **Shopping Cart:** Shopping cart & checkout logic 🛒.
+* **Promotions:** Coupons & discounts system 💸.
+* **Order Management:** Order tracking & status updates 📝.
 
-- 💳 **Payments**
-  - Stripe integration for online payments 💳  
-  - Cash on Delivery support 🏠  
-  - Refund handling and stock adjustment 🔄
+### 💳 Payments
+* **Stripe Integration:** Stripe integration for online payments 💳.
+* **Cash on Delivery:** Support for Cash on Delivery (COD) 🏠.
+* **Refunds:** Refund handling and stock adjustment 🔄.
 
-- 🗄️ **Database**
-  - **MongoDB** with **Mongoose** ODM 🛢️  
-  - Populated relations between users, orders, products ✅  
+### 🗄️ Database & Performance
+* **MongoDB:** MongoDB with **Mongoose** ODM 🛢️.
+* **Relations:** Populated relations between users, orders, and products ✅.
+* **Caching:** Advanced caching using **Redis Cloud** ⚡.
 
-- 🔐 **Security**
-  - Helmet for HTTP headers protection 🛡️  
-  - Rate limiting with Throttler Guards ⏱️  
-  - Input validation & sanitization ✅  
+### 🔐 Security
+* **Protection:** Helmet for HTTP headers protection 🛡️.
+* **Rate Limiting:** Rate limiting with Throttler Guards ⏱️.
+* **Validation:** Input validation & sanitization using DTOs ✅.
 
-- 🧪 **Testing**
-  - Unit tests and E2E tests 🧪  
-  - Test coverage reports 📊  
-
-- 🚀 **Deployment Ready**
-  - Works with **NestJS Mau** for AWS deployment ☁️  
-  - Configurable for **development, production, and watch mode** 👀  
+### 🧪 Testing & Deployment
+* **Testing:** Unit tests and E2E tests 🧪.
+* **Coverage:** Detailed test coverage reports 📊.
+* **Deployment Ready:** Works with **NestJS Mau** for AWS deployment ☁️.
+* **Environment:** Configurable for development, production, and watch mode 👀.
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
-|-------|------------|
-| Backend | NestJS (TypeScript) |
-| Database | MongoDB + Mongoose |
-| Authentication | JWT, OAuth |
-| Payment | Stripe |
-| Testing | Jest (unit & e2e) |
-| Security | Helmet, Throttler |
-| Deployment | NestJS Mau, AWS |
+| :--- | :--- |
+| **Backend** | NestJS (TypeScript) |
+| **Database** | MongoDB + Mongoose |
+| **Authentication** | JWT, OAuth |
+| **Payment** | Stripe |
+| **Real-time** | Socket.io |
+| **Testing** | Jest (unit & e2e) |
+| **Security** | Helmet, Throttler |
+| **Deployment** | NestJS Mau, AWS |
 
 ---
 
-## ⚙️ Project Setup
+## 📂 Project Structure
 
 ```bash
-# Install dependencies
+src/
+├── common/           # Decorators, Guards, Interceptors, Utilities
+├── database/         # Mongoose Schemas and Connection
+├── modules/          # Core Business Modules (User, Product, Order, etc.)
+│   ├── services/     # Logic Layer (Business Logic)
+│   ├── controllers/  # Routes Layer (API Endpoints)
+│   └── repositories/ # Data Abstraction Layer (Database Access)
+└── main.ts           # Application Entry Point
+
+## ⚙️ Full Setup, Run, Test & Deployment Commands
+
+```bash
+# 1️⃣ Install dependencies
 pnpm install
+
+# 2️⃣ Compile and Run
+# Development mode
+pnpm run start
+# Watch mode
+pnpm run start:dev
+# Production mode
+pnpm run start:prod
+
+# 3️⃣ Run Tests
+# Unit tests
+pnpm run test
+# E2E tests
+pnpm run test:e2e
+# Test coverage
+pnpm run test:cov
+
+# 4️⃣ Deployment
+# Install NestJS Mau globally
+pnpm install -g @nestjs/mau
+# Deploy to AWS
+mau deploy
