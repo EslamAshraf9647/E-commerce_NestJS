@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <script src = "https://cdn.socket.io/4.5.4/socket.io.min.js" ></script>
+         <script>
+            const socket = io('http://localhost:9000',{
+                auth:{
+                    accesstoken:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWEwYjE4OTFiYmNlNmQwM2NmMDQ2YTMiLCJlbWFpbCI6IkVzbGFtQXNocmFmNDIwMUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc3MjU2ODYwMiwiZXhwIjoxNzcyNTcyMjAyLCJqdGkiOiJkYTExZTg3ZC1hMjM1LTQyZjgtOWJkYi03MmJmODdmMmMxNTIifQ.zE_KOJKQ83xl5lc03VrFEz0nfe51xk_or9P9PX3Db_Y'
+                }
+            });
+
+            socket.on('product-stock-update', (data) => {
+                console.log('Received product stock update:', data);
+            });
+            </script>
+            </head>
+             <body>
+  </body>
+
+</html>

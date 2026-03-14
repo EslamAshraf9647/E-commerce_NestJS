@@ -1,0 +1,69 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ProductsObject {
+  description: String!
+  title: String!
+}
+
+type CartProductObject {
+  _id: ID!
+  productId: ProductsObject!
+  quantity: Float!
+  finalPrice: Float!
+}
+
+type CartObject {
+  _id: ID!
+  products: [CartProductObject!]!
+  subTotal: Float!
+}
+
+type OrderObject {
+  _id: ID!
+  userId: ID!
+  cartId: CartObject!
+  appliedCoupon: ID
+  address: String!
+  phone: String!
+  paymentMethod: PaymentMethodEnum!
+  orderStatus: OrderStatusEnum!
+  totalAmount: Float!
+  paymentIntent: String
+  discount: Float
+  finalAmount: Float
+}
+
+enum PaymentMethodEnum {
+  CASH_ON_DELIVERY
+  CREDIT_CARD
+  DEBIT_CARD
+  PAYPAL
+}
+
+enum OrderStatusEnum {
+  PENDING
+  PLACED
+  REFUNDED
+  CANCELLED
+  DELIVERED
+  ON_WAY
+  PAID
+  PROCESSING
+}
+
+type Query {
+  """Test Description"""
+  RootQueryResolver: String!
+
+  """return number"""
+  RootQueryNumber: Float!
+
+  """get all orders"""
+  ListOrders(listOrder: ListOrderFiltersDto!): [OrderObject!]!
+}
+
+input ListOrderFiltersDto {
+  orderStatus: OrderStatusEnum
+}
