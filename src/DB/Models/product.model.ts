@@ -5,7 +5,6 @@ import { Brand, Category, SubCategory, SubsubCategory, User } from ".";
 
 
 
-
 @Schema({timestamps: true})
 export class Product {
 

@@ -58,7 +58,7 @@ export class CreateProductBodyDto {
   @Type(() => Number)
   @IsPositive({message:'Stock must be positive'})
   @IsInt({message:"Stock must be Integeer"})
-  stock: number;
+  stock?: number;
 }
 
 

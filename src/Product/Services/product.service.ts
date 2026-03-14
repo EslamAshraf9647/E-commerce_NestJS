@@ -9,6 +9,7 @@ import { SubsubcategoryService } from "src/Sub_subCategory/Services/sub-sub-cate
 import { ListProductsQueryDto } from "../DTO/product.dto";
 import { FilterMapper } from "src/Common/Utils";
 import { Cache, CACHE_MANAGER } from "@nestjs/cache-manager";
+import slugify from "slugify";
 
 
 @Injectable()
@@ -77,6 +78,88 @@ export class ProductService{
     const products = await this.cacheManager.get('list-products')
     console.log(products);
     return products
+  }
+
+  async UpdateProductService({productId , body , authUser , images}){
+
+    const updatedBy = authUser.user._id 
+    const { title, description, stock, categoryId, subCategoryId, subsubCategoryId, brandId, Price, discount } = body;
+
+       if (!Types.ObjectId.isValid(categoryId)) {
+                  throw new BadRequestException('Invalid Category id');
+                  }
+       if (!Types.ObjectId.isValid(subCategoryId)) {
+                            throw new BadRequestException('Invalid SubCategory id');
+                 }
+       if (!Types.ObjectId.isValid(subsubCategoryId)) {
+                            throw new BadRequestException('Invalid SubSubCategory id');
+                 }  
+       if (!Types.ObjectId.isValid(brandId)) {
+                            throw new BadRequestException('Invalid brand id');
+                 }  
+
+    const product = await this.productRepository.findOne({filters:{_id: productId}})
+    if(!product) throw new NotFoundException('product not found')
+
+    if (categoryId) {
+    const category = await this.categoryService.GetCategoryById(categoryId);
+    if (!category) throw new NotFoundException('Category not found');
+    product.categoryId = Types.ObjectId.createFromHexString(categoryId);
+  }
+
+  if (subCategoryId) {
+    const subCategory = await this.subCategoryService.GetSubCategoryById(subCategoryId);
+    if (!subCategory) throw new NotFoundException('SubCategory not found');
+    product.subCategoryId = Types.ObjectId.createFromHexString(subCategoryId);
+  }
+
+  if (subsubCategoryId) {
+    const subsubCategory = await this.subsubCategoryService.GetSubsubCategoryById(subsubCategoryId);
+    if (!subsubCategory) throw new NotFoundException('SubSubCategory not found');
+    product.subsubCategoryId = Types.ObjectId.createFromHexString(subsubCategoryId);
+  }
+
+  if (brandId) {
+    const brand = await this.brandService.GetBrandById(brandId);
+    if (!brand) throw new NotFoundException('Brand not found');
+    product.brandId = Types.ObjectId.createFromHexString(brandId);
+  }
+
+  if (title){ 
+    product.title = title;
+    product.slug = slugify(title)
+
+  }
+  if (description) product.description = description;
+  if (stock) product.stock = stock;
+  if (Price) product.Price = Price;
+  if (discount) product.discount = discount;
+  if (Price || discount) {
+  const basePrice = Price ?? product.Price;
+  const disc = discount ?? product.discount ?? 0;
+  product.finalPrice = basePrice - (basePrice * disc) / 100;
+}
+
+
+if (product.images?.length) {
+  for (const img of product.images) {
+    await this.uploadCloudFileService.deleteFileByPublicId(img.public_id);
+  }
+}
+
+const paths = images.map(file => file.path);
+const data = await this.uploadCloudFileService.uploadfiles(paths, {
+  folder: `${process.env.CLOUDINARY_FOLDER}/Product/${product.folderId}`,
+  resource_type: 'image'
+});
+
+product.images = data;
+
+            product.updatedBy=  updatedBy
+
+            await product.save()
+            return product
+
   }
 
     // const { limit , page , sort , ...filters} = query   

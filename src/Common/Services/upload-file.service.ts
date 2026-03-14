@@ -3,7 +3,10 @@ import { CloudinaryConfig } from "../Config";
 import { UploadApiOptions } from "cloudinary";
 
 
-
+type CloudImage = {
+  secure_url: string
+  public_id: string
+}
 
 
 @Injectable()
@@ -17,7 +20,8 @@ export class UploadCloudFileService{
     }
 
     async uploadfiles(files: string[], options?:UploadApiOptions) {
-        const images: object[] = []
+        const images: CloudImage[] = []
+        // const images: { secure_url: string; public_id: string }[] = [];
         for (const path of files) {
             const data = await this.uploadfile(path, options)
             images.push({secure_url:data.secure_url , public_id: data.public_id})
